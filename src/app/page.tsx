@@ -1815,7 +1815,7 @@ export default function Home() {
           <div className="text-center">
             <p className="text-base md:text-lg text-slate-700 max-w-4xl mx-auto leading-relaxed font-medium">
               SLIIT offers a wide range of undergraduate and postgraduate programs across multiple faculties. 
-              Our GPA calculator helps SLIIT students track their academic performance using the university's 
+              Our GPA calculator helps SLIIT students track their academic performance using the university&apos;s 
               grading system and credit structures. Whether you&apos;re in Computing, Business, Engineering, or any 
               other faculty, calculate your GPA with confidence using our specialized tools.
             </p>
