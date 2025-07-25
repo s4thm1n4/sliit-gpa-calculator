@@ -18,13 +18,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     template: '%s | SLIIT GPA Calculator',
-    default: 'SLIIT GPA Calculator | Official Sri Lanka Institute of Information Technology',
+    default: 'SLIIT GPA Calculator |  The Most Accurate SLIIT GPA Calculator Sri Lanka',
   },
   description: "Calculate your SLIIT GPA instantly with our comprehensive calculator. Supports all faculties: Computing, Engineering, Business, Law, Architecture & more.",
   keywords: "SLIIT GPA Calculator, SLIIT CGPA, Sri Lanka Institute of Information Technology, GPA Calculator, SLIIT Computing, SLIIT Business",
-  authors: [{ name: 'SLIIT GPA Calculator Team' }],
+  authors: [{ name: 'Sathmina Dissanayake' }],
   openGraph: {
-    title: "SLIIT GPA Calculator - Official & Accurate",
+    title: "SLIIT GPA Calculator - 100 % Free & Accurate",
     description: "The most accurate SLIIT GPA calculator for all faculties and programs.",
     url: "https://sliitgpacalculator.com",
     type: "website",
