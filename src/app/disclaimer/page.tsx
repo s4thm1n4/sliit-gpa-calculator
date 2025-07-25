@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Disclaimer - SLIIT GPA Calculator',
@@ -72,26 +73,26 @@ export default function DisclaimerPage() {
               </ul>
             </div>
 
-            {/* Contact Information */}
+            {/* Contact Information - FIXED: Escaped apostrophe */}
             <div className="bg-slate-50 border-l-4 border-slate-400 p-6 rounded-r-lg">
               <h3 className="text-lg font-bold text-slate-800 mb-3">Questions or Concerns?</h3>
               <p className="text-slate-700 leading-relaxed">
                 If you have any questions about this disclaimer or concerns about the use of SLIIT-related terminology, 
-                please contact us. We respect SLIIT's intellectual property and will address any legitimate concerns promptly.
+                please contact us. We respect SLIIT&apos;s intellectual property and will address any legitimate concerns promptly.
               </p>
             </div>
 
           </div>
         </div>
 
-        {/* CTA Back to Calculator */}
+        {/* CTA Back to Calculator - FIXED: Using Link instead of <a> */}
         <div className="text-center mt-8">
-          <a 
+          <Link 
             href="/#calculator" 
             className="inline-block bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-8 py-4 rounded-xl font-bold hover:from-blue-600 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             I Understand - Use Calculator
-          </a>
+          </Link>
         </div>
 
       </div>

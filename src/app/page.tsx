@@ -1741,7 +1741,7 @@ export default function Home() {
                     Pass Requirement
                   </div>
                   <div className="text-sm text-slate-600">
-                    Minimum "C" grade (2.0 GPA) required. 80% attendance mandatory.
+                    Minimum &quot;C&quot; grade (2.0 GPA) required. 80% attendance mandatory.
                   </div>
                 </div>
               </div>
@@ -1816,7 +1816,7 @@ export default function Home() {
             <p className="text-base md:text-lg text-slate-700 max-w-4xl mx-auto leading-relaxed font-medium">
               SLIIT offers a wide range of undergraduate and postgraduate programs across multiple faculties. 
               Our GPA calculator helps SLIIT students track their academic performance using the university's 
-              grading system and credit structures. Whether you're in Computing, Business, Engineering, or any 
+              grading system and credit structures. Whether you&apos;re in Computing, Business, Engineering, or any 
               other faculty, calculate your GPA with confidence using our specialized tools.
             </p>
           </div>
