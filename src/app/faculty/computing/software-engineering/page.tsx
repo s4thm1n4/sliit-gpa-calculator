@@ -157,7 +157,7 @@ export default function SoftwareEngineeringPage() {
           <div className="text-center bg-slate-800 text-white rounded-2xl p-10">
             <h3 className="text-2xl font-bold mb-4">Your Academic Journey Starts Now</h3>
             <p className="text-slate-300 max-w-3xl mx-auto">
-              Your GPA is more than a number; it reflects your dedication and readiness for the professional world. By using this calculator and understanding your curriculum, you're taking a proactive step toward academic excellence. Stay engaged, collaborate, and make the most of the resources at SLIIT.
+              Your GPA is more than a number; it reflects your dedication and readiness for the professional world. By using this calculator and understanding your curriculum, you&apos;re taking a proactive step toward academic excellence. Stay engaged, collaborate, and make the most of the resources at SLIIT.
             </p>
           </div>
         </section>
