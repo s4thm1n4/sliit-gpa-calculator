@@ -21,7 +21,10 @@ export const metadata: Metadata = {
   keywords:
     'SLIIT GPA Calculator, SLIIT CGPA, Sri Lanka Institute of Information Technology, GPA Calculator, SLIIT Computing, SLIIT Business',
   authors: [{ name: 'Sathmina Dissanayake' }],
-
+  metadataBase: new URL('https://www.sliitgpacalculator.com'),
+  alternates: {
+    canonical: '/',
+  },
   /* ---------- ROBOTS ---------- */
   robots: {
     index: true,
