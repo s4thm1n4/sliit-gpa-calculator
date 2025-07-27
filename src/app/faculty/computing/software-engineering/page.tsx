@@ -51,7 +51,7 @@ export default function SoftwareEngineeringPage() {
           {/* Section 1: Introduction */}
           <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-slate-900 mb-4">
-              Mastering Your Future: A Deep Dive into SLIIT's Software Engineering Degree
+              Mastering Your Future: A Deep Dive into SLIIT&apos;s Software Engineering Degree
             </h2>
             <p className="text-lg text-slate-600">
               The Bachelor of Science Honours in Software Engineering at SLIIT is a cornerstone program designed to shape the architects of the digital future. It’s a systematic, disciplined approach to designing, developing, and maintaining the software that powers our world, blending computer science with engineering and project management.
@@ -69,7 +69,7 @@ export default function SoftwareEngineeringPage() {
               <div>
                 <h3 className="text-2xl font-bold text-slate-800 mb-3">Why Choose Software Engineering at SLIIT?</h3>
                 <p className="text-slate-700 leading-relaxed">
-                  SLIIT's program is distinguished by its industry-aligned curriculum, continuously updated to reflect the latest technological advancements. With a strong emphasis on hands-on learning through expansive labs, real-world projects, and a mandatory industry placement, graduates are not just academically qualified but also career-ready from day one.
+                  SLIIT&apos;s program is distinguished by its industry-aligned curriculum, continuously updated to reflect the latest technological advancements. With a strong emphasis on hands-on learning through expansive labs, real-world projects, and a mandatory industry placement, graduates are not just academically qualified but also career-ready from day one.
                 </p>
               </div>
             </div>
@@ -132,21 +132,21 @@ export default function SoftwareEngineeringPage() {
                         <span className="text-2xl mt-1">1️⃣</span>
                         <div>
                             <strong className="text-slate-700">First Year Foundations:</strong>
-                            <p className="text-sm text-slate-600">The 2025 syllabus introduces "Data Communication Networks" and a focused "Technical Writing" course early on, emphasizing the networked nature of modern software from day one.</p>
+                            <p className="text-sm text-slate-600">The 2025 syllabus introduces &quot;Data Communication Networks&quot; and a focused &quot;Technical Writing&quot; course early on, emphasizing the networked nature of modern software from day one.</p>
                         </div>
                     </li>
                     <li className="flex items-start gap-4 p-4 bg-slate-50 rounded-lg">
                         <span className="text-2xl mt-1">2️⃣</span>
                         <div>
                             <strong className="text-slate-700">Second Year Specialization:</strong>
-                            <p className="text-sm text-slate-600">"Artificial Intelligence & Machine Learning" is now a core second-year module, reflecting the universal importance of AI. "Web and Mobile Technologies" is also introduced much earlier.</p>
+                            <p className="text-sm text-slate-600">&quot;Artificial Intelligence & Machine Learning&quot; is now a core second-year module, reflecting the universal importance of AI. &quot;Web and Mobile Technologies&quot; is also introduced much earlier.</p>
                         </div>
                     </li>
                     <li className="flex items-start gap-4 p-4 bg-slate-50 rounded-lg">
                         <span className="text-2xl mt-1">🎓</span>
                         <div>
                             <strong className="text-slate-700">Final Year Electives:</strong>
-                            <p className="text-sm text-slate-600">The 2025 syllabus offers a clearer path to specialization with electives like "Cloud Native Development," "Deep Learning," and "Big Data," allowing students to build a highly marketable skill set.</p>
+                            <p className="text-sm text-slate-600">The 2025 syllabus offers a clearer path to specialization with electives like &quot;Cloud Native Development,&quot; &quot;Deep Learning,&quot; and &quot;Big Data,&quot; allowing students to build a highly marketable skill set.</p>
                         </div>
                     </li>
                 </ul>
