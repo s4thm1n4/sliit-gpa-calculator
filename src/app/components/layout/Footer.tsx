@@ -299,7 +299,7 @@ const Footer = () => {
               <Link href="/disclaimer" className="text-slate-400 hover:text-amber-300 transition-colors font-medium">
                 Full Disclaimer
               </Link>
-              <Link href="/sitemap" className="text-slate-400 hover:text-white transition-colors">
+              <Link href="/sitemap.xml" className="text-slate-400 hover:text-white transition-colors">
                 Sitemap
               </Link>
             </div>
