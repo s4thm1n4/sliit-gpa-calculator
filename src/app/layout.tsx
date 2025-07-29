@@ -1,7 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import Script from 'next/script';              // NEW
+import Script from 'next/script';
 import './globals.css';
 import './design-system.css';
 import Header from './components/layout/Header';
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/og-banner.jpg',          // add the image to /public/images
+        url: '/images/og-banner.jpg',
         width: 1200,
         height: 630,
         alt: 'SLIIT GPA Calculator interface',
@@ -57,8 +57,9 @@ export const metadata: Metadata = {
   /* ---------- TWITTER CARD ---------- */
   twitter: {
     card: 'summary_large_image',
-    site: '@yourHandle',                       // optional
-    creator: '@yourHandle',                    // optional
+    site: '@yourHandle',
+    creator: '@yourHandle',
+
     title: 'SLIIT GPA Calculator - 100 % Free & Accurate',
     description:
       'Calculate your GPA & CGPA with official SLIIT grading rules. Works for Computing, Business, Engineering, Law and more.',
@@ -87,7 +88,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="min-h-screen">{children}</main>
 
         <Footer />
-   {/* 2. Add the Google Tag Scripts here */}
+
+        {/* --- Google Analytics Scripts Start --- */}
         <Script 
           strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-R7CZVLDGNQ" 
@@ -104,6 +106,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `,
           }}
         />
+        {/* --- Google Analytics Scripts End --- */}
+        
         {/* ---------- JSON-LD FAQ SCHEMA (only possible via <Script>) ---------- */}
         <Script
           id="ld-json-faq"
