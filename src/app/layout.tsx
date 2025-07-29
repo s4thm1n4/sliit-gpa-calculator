@@ -6,8 +6,6 @@ import './globals.css';
 import './design-system.css';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-import { Analytics } from "@vercel/analytics/next"
-
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] });
@@ -89,7 +87,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="min-h-screen">{children}</main>
 
         <Footer />
-
+   {/* 2. Add the Google Tag Scripts here */}
+        <Script 
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-R7CZVLDGNQ" 
+        />
+        <Script 
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-R7CZVLDGNQ');
+            `,
+          }}
+        />
         {/* ---------- JSON-LD FAQ SCHEMA (only possible via <Script>) ---------- */}
         <Script
           id="ld-json-faq"
@@ -121,7 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               ],
             }),
           }}
-        /><Analytics/>
+        />
       </body>
     </html>
   );
