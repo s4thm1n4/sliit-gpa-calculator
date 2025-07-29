@@ -6,7 +6,7 @@ import './globals.css';
 import './design-system.css';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-
+import { Analytics } from "@vercel/analytics/next"
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] });
 
