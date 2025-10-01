@@ -287,6 +287,9 @@ const Footer = () => {
                 Personal Educational Tool • 
                 <span className="text-slate-300">Not affiliated with SLIIT administration</span>
               </p>
+              <p className="text-xs mt-2">
+                Developed by <a href="https://www.seoservicessrilanka.com/" target="_blank" rel="dofollow" className="text-blue-400 hover:text-blue-300 transition-colors font-medium">Sathmina Dimath Dissanayake</a>
+              </p>
             </div>
             
             <div className="flex items-center gap-6 text-sm">

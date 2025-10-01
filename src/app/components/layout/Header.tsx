@@ -180,12 +180,14 @@ const Header = () => {
               </div>
             ))}
 
-            <Link 
-              href="/about" 
+            <a 
+              href="https://www.seoservicessrilanka.com/" 
+              target="_blank"
+              rel="dofollow"
               className="text-slate-700 hover:text-blue-600 font-medium transition-colors px-3 py-2"
             >
               About
-            </Link>
+            </a>
 
             <Link 
               href="/#calculator" 
