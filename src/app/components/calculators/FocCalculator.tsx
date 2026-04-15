@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState } from 'react';
 
 // All data and logic is now self-contained in this component.
 
@@ -723,6 +723,49 @@ interface Course {
   grade: string;
 }
 
+type YearSemester = 'Y3' | 'Y4';
+type CurriculumModule = {
+  name: string;
+  code: string;
+  credits: number;
+  typical_semester?: string;
+  core?: boolean;
+};
+
+const getCurriculumEntry = (faculty: string, syllabus: string, period: string) => {
+  const facultyData = curriculumData[faculty as keyof typeof curriculumData];
+  const syllabusData = facultyData?.[syllabus as keyof typeof facultyData];
+  return syllabusData?.[period as keyof typeof syllabusData];
+};
+
+const modulesToCourses = (modules: CurriculumModule[]): Course[] =>
+  modules.map((course, index) => ({
+    id: index + 1,
+    name: course.name,
+    code: course.code,
+    credits: course.credits,
+    grade: 'A+',
+  }));
+
+const getSemesterCourses = (faculty: string, syllabus: string, semester: string): Course[] => {
+  if (semester === 'Y3' || semester === 'Y4') return [];
+
+  const semesterData = getCurriculumEntry(faculty, syllabus, semester);
+  return Array.isArray(semesterData) ? modulesToCourses(semesterData) : [];
+};
+
+const getYearCourses = (
+  faculty: string,
+  syllabus: string,
+  year: YearSemester,
+  selectedModules: string[]
+): Course[] => {
+  const yearData = getCurriculumEntry(faculty, syllabus, year);
+  if (!Array.isArray(yearData)) return [];
+
+  return modulesToCourses(yearData.filter(module => selectedModules.includes(module.code)));
+};
+
 const CircularGPAMeter = ({ gpa, size = 140 }: { gpa: number; size?: number }) => {
   const radius = (size - 40) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -776,11 +819,18 @@ const CircularGPAMeter = ({ gpa, size = 140 }: { gpa: number; size?: number }) =
   );
 };
 
-export default function FocCalculator({ preselectedProgram }: { preselectedProgram?: string }) {
+interface FocCalculatorProps {
+  preselectedProgram?: string;
+  embedded?: boolean;
+}
+
+export default function FocCalculator({ preselectedProgram, embedded = false }: FocCalculatorProps) {
   const [selectedFaculty, setSelectedFaculty] = useState<string>(preselectedProgram || 'software-engineering');
   const [selectedSyllabus, setSelectedSyllabus] = useState<string>('2025');
   const [selectedSemester, setSelectedSemester] = useState<string>('Y1S1');
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<Course[]>(() =>
+    getSemesterCourses(preselectedProgram || 'software-engineering', '2025', 'Y1S1')
+  );
   const [selectedY3Modules, setSelectedY3Modules] = useState<string[]>([]);
   const [selectedY4Modules, setSelectedY4Modules] = useState<string[]>([]);
   const [yearSetupMode, setYearSetupMode] = useState<{[key: string]: 'quick' | 'custom'}>({
@@ -792,7 +842,7 @@ export default function FocCalculator({ preselectedProgram }: { preselectedProgr
     if (preselectedProgram) return; // Prevent changing if pre-selected
     setSelectedFaculty(faculty);
     setSelectedSemester('Y1S1');
-    setCourses([]);
+    setCourses(getSemesterCourses(faculty, selectedSyllabus, 'Y1S1'));
     setSelectedY3Modules([]);
     setSelectedY4Modules([]);
   };
@@ -800,7 +850,7 @@ export default function FocCalculator({ preselectedProgram }: { preselectedProgr
   const handleSyllabusChange = (syllabus: string) => {
     setSelectedSyllabus(syllabus);
     setSelectedSemester('Y1S1');
-    setCourses([]);
+    setCourses(getSemesterCourses(selectedFaculty, syllabus, 'Y1S1'));
     setSelectedY3Modules([]);
     setSelectedY4Modules([]);
   };
@@ -809,40 +859,27 @@ export default function FocCalculator({ preselectedProgram }: { preselectedProgr
     setSelectedSemester(semester);
     setSelectedY3Modules([]);
     setSelectedY4Modules([]);
-    
-    if (semester === 'Y3' || semester === 'Y4') {
-      setCourses([]);
-    } else if (curriculumData[selectedFaculty as keyof typeof curriculumData]?.[selectedSyllabus as keyof typeof curriculumData[keyof typeof curriculumData]]?.[semester as keyof typeof curriculumData[keyof typeof curriculumData][keyof typeof curriculumData[keyof typeof curriculumData]]]) {
-      const semesterData = curriculumData[selectedFaculty as keyof typeof curriculumData][selectedSyllabus as keyof typeof curriculumData[keyof typeof curriculumData]][semester as keyof typeof curriculumData[keyof typeof curriculumData][keyof typeof curriculumData[keyof typeof curriculumData]]];
-      if (Array.isArray(semesterData)) {
-        setCourses(semesterData.map((course, index) => ({
-          id: index + 1,
-          name: course.name,
-          code: course.code,
-          credits: course.credits,
-          grade: 'A+'
-        })));
-      }
-    }
+    setCourses(getSemesterCourses(selectedFaculty, selectedSyllabus, semester));
   };
 
-    const handleYearModuleToggle = (year: 'Y3' | 'Y4', moduleCode: string) => {
+    const handleYearModuleToggle = (year: YearSemester, moduleCode: string) => {
+        const selectedModules = year === 'Y3' ? selectedY3Modules : selectedY4Modules;
+        const nextModules = selectedModules.includes(moduleCode)
+            ? selectedModules.filter(code => code !== moduleCode)
+            : [...selectedModules, moduleCode];
+
         if (year === 'Y3') {
-        setSelectedY3Modules(prev => 
-            prev.includes(moduleCode) 
-            ? prev.filter(code => code !== moduleCode)
-            : [...prev, moduleCode]
-        );
+        setSelectedY3Modules(nextModules);
         } else {
-        setSelectedY4Modules(prev => 
-            prev.includes(moduleCode) 
-            ? prev.filter(code => code !== moduleCode)
-            : [...prev, moduleCode]
-        );
+        setSelectedY4Modules(nextModules);
+        }
+
+        if (selectedSemester === year) {
+          setCourses(getYearCourses(selectedFaculty, selectedSyllabus, year, nextModules));
         }
     };
 
-    const loadQuickSetup = (year: 'Y3' | 'Y4') => {
+    const loadQuickSetup = (year: YearSemester) => {
         const yearData = curriculumData[selectedFaculty as keyof typeof curriculumData]?.[selectedSyllabus as keyof typeof curriculumData[keyof typeof curriculumData]]?.[year];
         if (Array.isArray(yearData)) {
         const quickModules = yearData
@@ -854,27 +891,9 @@ export default function FocCalculator({ preselectedProgram }: { preselectedProgr
         } else {
             setSelectedY4Modules(quickModules);
         }
+
+        setCourses(getYearCourses(selectedFaculty, selectedSyllabus, year, quickModules));
         }
-    };
-
-    const generateYearCourses = () => {
-        if (selectedSemester !== 'Y3' && selectedSemester !== 'Y4') return;
-        
-        const yearData = curriculumData[selectedFaculty as keyof typeof curriculumData]?.[selectedSyllabus as keyof typeof curriculumData[keyof typeof curriculumData]]?.[selectedSemester as 'Y3' | 'Y4'];
-        if (!Array.isArray(yearData)) return;
-
-        const selectedModules = selectedSemester === 'Y3' ? selectedY3Modules : selectedY4Modules;
-        const yearCourses = yearData
-        .filter(module => selectedModules.includes(module.code))
-        .map((module, index) => ({
-            id: index + 1,
-            name: module.name,
-            code: module.code,
-            credits: module.credits,
-            grade: 'A+' as const
-        }));
-
-        setCourses(yearCourses);
     };
 
     const updateCourse = (id: number, field: keyof Omit<Course, 'id'>, value: string | number) => {
@@ -891,13 +910,6 @@ export default function FocCalculator({ preselectedProgram }: { preselectedProgr
         }
     };
     
-    useMemo(() => {
-        if (selectedSemester === 'Y3' || selectedSemester === 'Y4') {
-          generateYearCourses();
-        }
-    }, [selectedY3Modules, selectedY4Modules, selectedSemester]);
-
-
     const calculateGPA = (courseList: Course[]) => {
         const gradeMap = new Map(sliitGradeScale.map(item => [item.grade, item.gpa]));
         const totalPoints = courseList.reduce((acc, c) => acc + ((gradeMap.get(c.grade) || 0) * c.credits), 0);
@@ -916,14 +928,8 @@ export default function FocCalculator({ preselectedProgram }: { preselectedProgr
         ? Object.keys(curriculumData[selectedFaculty as keyof typeof curriculumData][selectedSyllabus as keyof typeof curriculumData[keyof typeof curriculumData]]) 
         : [];
     const isYearBasedSemester = selectedSemester === 'Y3' || selectedSemester === 'Y4';
-  
-    useEffect(() => {
-        // Automatically load the first semester's courses when the component mounts or program changes
-        handleSemesterChange('Y1S1');
-    }, [selectedFaculty, selectedSyllabus]);
-
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+    <div className={`${embedded ? 'rounded-xl shadow-sm' : 'rounded-2xl shadow-xl'} bg-white border border-slate-200 overflow-hidden`}>
         <div className="p-4 md:p-8">
             <div className="space-y-6 md:space-y-8">
             <div>
@@ -1057,6 +1063,7 @@ export default function FocCalculator({ preselectedProgram }: { preselectedProgr
                             setYearSetupMode({...yearSetupMode, [selectedSemester]: 'custom'});
                             if (selectedSemester === 'Y3') setSelectedY3Modules([]);
                             else setSelectedY4Modules([]);
+                            setCourses([]);
                           }}
                           className={`p-4 rounded-lg border-2 transition-all ${
                             yearSetupMode[selectedSemester] === 'custom'
@@ -1077,6 +1084,7 @@ export default function FocCalculator({ preselectedProgram }: { preselectedProgr
                             } else {
                                 setSelectedY4Modules(allModuleCodes);
                             }
+                            setCourses(getYearCourses(selectedFaculty, selectedSyllabus, selectedSemester as YearSemester, allModuleCodes));
                           }}
                           className="p-4 rounded-lg border-2 border-green-200 bg-green-50 text-green-700 hover:bg-green-100 hover:border-green-300 transition-all"
                         >

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import BusinessCalculator from '@/app/components/ui/BusinessCalculator';
+import CalculatorDashboard from '@/app/components/calculators/CalculatorDashboard';
 
 export const metadata: Metadata = {
   title: 'SLIIT Business Faculty GPA Calculator - School Of Business',
@@ -11,8 +11,14 @@ export const metadata: Metadata = {
 
 export default function BusinessFacultyPage() {
   return (
-    <div className="min-h-screen bg-slate-50">
-      <BusinessCalculator />
+    <div className="min-h-screen bg-slate-50 py-6 md:py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <CalculatorDashboard
+          lockedCalculator="business"
+          title="SLIIT Business Faculty GPA Calculator"
+        description="SLIIT Business GPA estimates based on supported Business program curriculum data."
+        />
+      </div>
     </div>
   );
 }
