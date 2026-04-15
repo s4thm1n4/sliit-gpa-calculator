@@ -2,11 +2,9 @@
 
 import { useState } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import { getAllSLIITFaculties } from './data/faculty-programs';
-import HeroSection from './components/layout/sections/HeroSection';
 import FacultyCard from './components/ui/FacultyCard';
-import FocCalculator from '@/app/components/calculators/FocCalculator'; 
+import CalculatorDashboard, { CalculatorKind } from '@/app/components/calculators/CalculatorDashboard';
 import { sliitGradeScale } from './data/grades';
 
 // SEO Content Data
@@ -163,7 +161,10 @@ const AccordionItem = ({ question, answer }: { question: string, answer: string 
 };
 
 export default function Home() {
-  const faculties = getAllSLIITFaculties();
+  const [activeCalculator, setActiveCalculator] = useState<CalculatorKind>('computing');
+  const faculties = getAllSLIITFaculties().filter(faculty =>
+    ['computing', 'business'].includes(faculty.id)
+  );
 
   return (
     <div className="min-h-screen">
@@ -176,26 +177,16 @@ export default function Home() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }}
         />
       </Head>
-      
-      <HeroSection />
-
-      <section id="calculator" className="py-12 md:py-20 bg-slate-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              SLIIT GPA Calculator
-            </h2>
-            <p className="text-lg md:text-xl text-slate-700 max-w-3xl mx-auto">
-              Choose your calculator type and calculate your SLIIT GPA with precision
-            </p>
-          </div>
-          
-          <FocCalculator />
-
+      <section className="bg-slate-50 py-4 md:py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <CalculatorDashboard
+            activeCalculator={activeCalculator}
+            onCalculatorChange={setActiveCalculator}
+          />
         </div>
       </section>
 
-      <section className="py-12 md:py-16 bg-white">
+      <section id="grading-scale" className="py-12 md:py-16 bg-white scroll-mt-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
@@ -242,10 +233,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              SLIIT Faculty Programs
+              Supported SLIIT Faculty Calculators
             </h2>
             <p className="text-lg md:text-xl text-slate-700 max-w-3xl mx-auto">
-              Explore specialized calculators and information for each SLIIT faculty
+              Use the currently available specialized calculators for Computing and Business
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -301,7 +292,7 @@ export default function Home() {
             </p>
           </div>
            <div className="mt-16 md:mt-24 max-w-4xl mx-auto">
-            <div className="mb-12">
+            <div id="faq" className="mb-12 scroll-mt-24">
               <h2 className="text-2xl md:text-3xl font-bold text-slate-900 text-center mb-4">
                 What Is the SLIIT GPA Calculator and Why Should You Care?
               </h2>

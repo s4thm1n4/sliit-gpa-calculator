@@ -1,8 +1,5 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
-// We will reuse the main calculator component from the homepage.
-// Make sure the path is correct based on your project structure.
-import FocCalculator from '@/app/components/calculators/FocCalculator'; 
+import CalculatorDashboard from '@/app/components/calculators/CalculatorDashboard';
 
 export const metadata: Metadata = {
   title: 'SLIIT Software Engineering GPA Calculator (Old & New Syllabus)',
@@ -14,47 +11,29 @@ export const metadata: Metadata = {
 
 export default function SoftwareEngineeringPage() {
   return (
-    <div className="py-12 md:py-20 bg-slate-50">
+    <div className="py-6 md:py-10 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Page Header */}
-        <div className="text-center mb-12">
-          <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <span className="text-3xl">💻</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-            BSc (Hons) in Software Engineering
-          </h1>
-          <p className="text-xl text-slate-700 max-w-3xl mx-auto">
-            Your dedicated GPA calculator and comprehensive guide for the SLIIT SE program.
-          </p>
-        </div>
 
         {/* Pre-filtered Calculator Section */}
-        <section id="calculator" className="mb-16">
-          <h2 className="text-3xl font-bold text-slate-900 text-center mb-8">
-            Software Engineering GPA Calculator
-          </h2>
-          <FocCalculator preselectedProgram="software-engineering" />
-          
-          {/* Internal Link to Main Calculator - ADDED THIS SECTION */}
-          <div className="text-center mt-6">
-            <Link href="/#calculator" className="text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-300">
-              Or, use the main calculator for all FOC programs ➔
-            </Link>
-          </div>
+        <section className="mb-16">
+          <CalculatorDashboard
+            lockedCalculator="computing"
+            computingPreselectedProgram="software-engineering"
+            title="SLIIT Software Engineering GPA Calculator"
+        description="GPA estimates for the SLIIT BSc (Hons) in Software Engineering using supported old and new syllabus data."
+          />
         </section>
 
         {/* SEO Content Section - Redesigned */}
         <section className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden p-6 md:p-12 space-y-12">
-          
+
           {/* Section 1: Introduction */}
           <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-slate-900 mb-4">
               Mastering Your Future: A Deep Dive into SLIIT&apos;s Software Engineering Degree
             </h2>
             <p className="text-lg text-slate-600">
-              The Bachelor of Science Honours in Software Engineering at SLIIT is a cornerstone program designed to shape the architects of the digital future. It’s a systematic, disciplined approach to designing, developing, and maintaining the software that powers our world, blending computer science with engineering and project management.
+              The Bachelor of Science Honours in Software Engineering at SLIIT is a cornerstone program designed to shape the architects of the digital future. Itâ€™s a systematic, disciplined approach to designing, developing, and maintaining the software that powers our world, blending computer science with engineering and project management.
             </p>
           </div>
 
@@ -63,7 +42,7 @@ export default function SoftwareEngineeringPage() {
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="flex-shrink-0">
                 <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-5xl">🎓</span>
+                  <span className="text-5xl">ðŸŽ“</span>
                 </div>
               </div>
               <div>
@@ -85,12 +64,12 @@ export default function SoftwareEngineeringPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { icon: '💻', title: 'Software Engineer/Developer', description: 'Design, develop, and test software applications for businesses, consumers, and governments.' },
-                { icon: '🚀', title: 'Full Stack Developer', description: 'Master both front-end (UI) and back-end (server) development to build complete web applications.' },
-                { icon: '📱', title: 'Mobile Application Developer', description: 'Specialize in creating innovative applications for iOS and Android platforms.' },
-                { icon: '🎨', title: 'UI/UX Engineer', description: 'Blend technical skill with creative design to build intuitive and enjoyable user experiences.' },
-                { icon: '🔗', title: 'System Analyst', description: 'Act as the bridge between business problems and technology solutions, optimizing systems and processes.' },
-                { icon: '☁️', title: 'Cloud & Enterprise Developer', description: 'Develop scalable, resilient applications using cloud platforms like AWS, Azure, and Google Cloud.' },
+                { icon: 'ðŸ’»', title: 'Software Engineer/Developer', description: 'Design, develop, and test software applications for businesses, consumers, and governments.' },
+                { icon: 'ðŸš€', title: 'Full Stack Developer', description: 'Master both front-end (UI) and back-end (server) development to build complete web applications.' },
+                { icon: 'ðŸ“±', title: 'Mobile Application Developer', description: 'Specialize in creating innovative applications for iOS and Android platforms.' },
+                { icon: 'ðŸŽ¨', title: 'UI/UX Engineer', description: 'Blend technical skill with creative design to build intuitive and enjoyable user experiences.' },
+                { icon: 'ðŸ”—', title: 'System Analyst', description: 'Act as the bridge between business problems and technology solutions, optimizing systems and processes.' },
+                { icon: 'â˜ï¸', title: 'Cloud & Enterprise Developer', description: 'Develop scalable, resilient applications using cloud platforms like AWS, Azure, and Google Cloud.' },
               ].map((career) => (
                 <div key={career.title} className="bg-slate-50/50 rounded-2xl p-6 border border-slate-200 text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                   <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
@@ -129,21 +108,21 @@ export default function SoftwareEngineeringPage() {
                 <h4 className="text-xl font-bold text-slate-800 text-center mb-6">Key Module Upgrades</h4>
                 <ul className="space-y-4">
                     <li className="flex items-start gap-4 p-4 bg-slate-50 rounded-lg">
-                        <span className="text-2xl mt-1">1️⃣</span>
+                        <span className="text-2xl mt-1">1ï¸âƒ£</span>
                         <div>
                             <strong className="text-slate-700">First Year Foundations:</strong>
                             <p className="text-sm text-slate-600">The 2025 syllabus introduces &quot;Data Communication Networks&quot; and a focused &quot;Technical Writing&quot; course early on, emphasizing the networked nature of modern software from day one.</p>
                         </div>
                     </li>
                     <li className="flex items-start gap-4 p-4 bg-slate-50 rounded-lg">
-                        <span className="text-2xl mt-1">2️⃣</span>
+                        <span className="text-2xl mt-1">2ï¸âƒ£</span>
                         <div>
                             <strong className="text-slate-700">Second Year Specialization:</strong>
                             <p className="text-sm text-slate-600">&quot;Artificial Intelligence & Machine Learning&quot; is now a core second-year module, reflecting the universal importance of AI. &quot;Web and Mobile Technologies&quot; is also introduced much earlier.</p>
                         </div>
                     </li>
                     <li className="flex items-start gap-4 p-4 bg-slate-50 rounded-lg">
-                        <span className="text-2xl mt-1">🎓</span>
+                        <span className="text-2xl mt-1">ðŸŽ“</span>
                         <div>
                             <strong className="text-slate-700">Final Year Electives:</strong>
                             <p className="text-sm text-slate-600">The 2025 syllabus offers a clearer path to specialization with electives like &quot;Cloud Native Development,&quot; &quot;Deep Learning,&quot; and &quot;Big Data,&quot; allowing students to build a highly marketable skill set.</p>

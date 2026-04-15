@@ -566,6 +566,22 @@ interface Course {
   grade: string;
 }
 
+const getSemesterCourses = (program: string, semester: string): Course[] => {
+    const semesterData = curriculumData[program as keyof typeof curriculumData]?.[semester as keyof typeof curriculumData[keyof typeof curriculumData]];
+
+    if (!Array.isArray(semesterData)) {
+        return [];
+    }
+
+    return semesterData.map((course, index) => ({
+        id: index + 1,
+        name: course.name,
+        code: course.code,
+        credits: course.credits,
+        grade: 'A+',
+    }));
+};
+
 const CircularGPAMeter = ({ gpa, size = 140 }: { gpa: number; size?: number }) => {
   const radius = (size - 40) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -619,33 +635,27 @@ const CircularGPAMeter = ({ gpa, size = 140 }: { gpa: number; size?: number }) =
   );
 };
 
-export default function BusinessCalculator() {
+interface BusinessCalculatorProps {
+    embedded?: boolean;
+    showHeader?: boolean;
+}
+
+export default function BusinessCalculator({ embedded = false, showHeader = true }: BusinessCalculatorProps) {
     const [calculatorMode, setCalculatorMode] = useState<'curriculum' | 'custom'>('curriculum');
     const [selectedProgram, setSelectedProgram] = useState<string>('business-management');
     const [selectedSemester, setSelectedSemester] = useState<string>('Y1S1');
-    const [courses, setCourses] = useState<Course[]>([]);
+    const [courses, setCourses] = useState<Course[]>(() => getSemesterCourses('business-management', 'Y1S1'));
     const [customCourses, setCustomCourses] = useState<Course[]>([]);
 
     const handleProgramChange = (program: string) => {
         setSelectedProgram(program);
         setSelectedSemester('Y1S1');
-        setCourses([]);
+        setCourses(getSemesterCourses(program, 'Y1S1'));
     };
 
     const handleSemesterChange = (semester: string) => {
         setSelectedSemester(semester);
-        if (curriculumData[selectedProgram as keyof typeof curriculumData]?.[semester as keyof typeof curriculumData[keyof typeof curriculumData]]) {
-            const semesterData = curriculumData[selectedProgram as keyof typeof curriculumData][semester as keyof typeof curriculumData[keyof typeof curriculumData]];
-            if (Array.isArray(semesterData)) {
-                setCourses(semesterData.map((course, index) => ({
-                    id: index + 1,
-                    name: course.name,
-                    code: course.code,
-                    credits: course.credits,
-                    grade: 'A+'
-                })));
-            }
-        }
+        setCourses(getSemesterCourses(selectedProgram, semester));
     };
 
     const updateCourse = (id: number, field: keyof Omit<Course, 'id'>, value: string | number) => {
@@ -703,8 +713,9 @@ export default function BusinessCalculator() {
         : [];
 
   return (
-    <div className="py-12 md:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className={embedded ? '' : 'py-12 md:py-20'}>
+        <div className={embedded ? '' : 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'}>
+          {showHeader && (
           <div className="text-center mb-12">
             <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <span className="text-3xl">💼</span>
@@ -716,8 +727,9 @@ export default function BusinessCalculator() {
               Calculate your SLIIT Business faculty GPA with our specialized calculator designed for business programs
             </p>
           </div>
+          )}
 
-          <div className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+          <div className={`${embedded ? 'rounded-xl shadow-sm' : 'rounded-2xl shadow-xl'} bg-white border border-slate-200 overflow-hidden`}>
             <div className="border-b border-slate-200">
                 <div className="grid grid-cols-2 gap-0">
                     <button
