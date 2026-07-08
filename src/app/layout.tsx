@@ -86,6 +86,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50`}
       >
+        {/* --- Google AdSense --- */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9200903788431070"
+          crossOrigin="anonymous"
+          strategy="beforeInteractive"
+        />
+
         <Header />
 
         <main className="min-h-screen">{children}</main>
